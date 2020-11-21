@@ -1,0 +1,13 @@
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\bin\Debug\netcoreapp3.1\GameServer.exe
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\bin\Debug\netcoreapp3.1\GameServer.deps.json
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\bin\Debug\netcoreapp3.1\GameServer.runtimeconfig.json
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\bin\Debug\netcoreapp3.1\GameServer.runtimeconfig.dev.json
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\bin\Debug\netcoreapp3.1\GameServer.dll
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\bin\Debug\netcoreapp3.1\GameServer.pdb
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\obj\Debug\netcoreapp3.1\GameServer.csprojAssemblyReference.cache
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\obj\Debug\netcoreapp3.1\GameServer.AssemblyInfoInputs.cache
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\obj\Debug\netcoreapp3.1\GameServer.AssemblyInfo.cs
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\obj\Debug\netcoreapp3.1\GameServer.csproj.CoreCompileInputs.cache
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\obj\Debug\netcoreapp3.1\GameServer.dll
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\obj\Debug\netcoreapp3.1\GameServer.pdb
+C:\Users\manue\OneDrive\Dokumente\SAE_PC\NetworkProgramming\2DShooter_Multiplayer\ServerStuff\GameServer\GameServer\obj\Debug\netcoreapp3.1\GameServer.genruntimeconfig.cache
