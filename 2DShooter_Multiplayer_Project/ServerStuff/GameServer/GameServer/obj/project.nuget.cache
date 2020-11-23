@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/L+ohIUA/FfqtEocwI2xqERro/h5WDLJ9RYV4dHrz1neXp/pG2tgAX7aDmn28f8c9J6krhuyixiWme4bUmPmmw==",
+  "dgSpecHash": "rbEljze7B4K5O3azMXDZZue+aJdcK7/ZoHummYa56yJNBDG1AFvwb+eJXOlVTRl9lMr4EoX92oVaGKaeKKUhIg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\manue\\OneDrive\\Dokumente\\SAE_PC\\NetworkProgramming\\2DShooter_Multiplayer\\ServerStuff\\GameServer\\GameServer\\GameServer.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\manue\\OneDrive\\Dokumente\\SAE_PC\\NetworkProgramming\\2DShooter_Multiplayer\\2DShooter_Multiplayer_Project\\ServerStuff\\GameServer\\GameServer\\GameServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\manue\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -16,6 +16,7 @@ namespace GameServer
 
 
         private static TcpListener tcpListener;
+        private static UdpClient udpListener; //will manage all udp communication for the server
 
         public static void Start(int _maxPlayers, int _port)
         {
@@ -27,6 +28,9 @@ namespace GameServer
             tcpListener = new TcpListener(IPAddress.Any, Port);
             tcpListener.Start(); 
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
+
+            udpListener = new UdpClient(Port);
+            udpListener.BeginReceive(UDPReceiveCallback, null);
 
             Console.WriteLine($"Server startet on {Port}.");
 
@@ -50,6 +54,65 @@ namespace GameServer
             Console.WriteLine($"{_client.Client.RemoteEndPoint} failed to connnect: Server full!");
         }
 
+        private static void UDPReceiveCallback(IAsyncResult _result)
+        {
+            try
+            {
+                IPEndPoint _clientEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                byte[] _data = udpListener.EndReceive(_result, ref _clientEndPoint);
+                udpListener.BeginReceive(UDPReceiveCallback, null); //so we dont miss any incoming data
+
+                if (_data.Length < 4)
+                {
+                    
+                    return;
+                }
+
+                using (Packet _packet = new Packet(_data))
+                {
+                    int _clientId = _packet.ReadInt();
+
+                    //check if client id is equal to 0
+                    if (_clientId == 0) //should never be an issue
+                    {
+                        return;
+                    }
+
+                    if (clients[_clientId].udp.endPoint == null) //so this is a new packet an empty one which opens up the cleints port
+                    {
+                        clients[_clientId].udp.Connect(_clientEndPoint);
+                        return;
+                    }
+
+                    if (clients[_clientId].udp.endPoint.ToString() == _clientEndPoint.ToString()) //to string because else it will always return false for some reason
+                    {
+                        clients[_clientId].udp.HandleData(_packet);
+                    }
+                }
+            }
+            catch (Exception _ex)
+            {
+
+                Console.WriteLine($"Error receiving UDP Data: {_ex}");
+            }
+        }
+
+        public static void SendUDPData(IPEndPoint _clientEndPoint, Packet _packet)
+        {
+            try
+            {
+                if (_clientEndPoint != null)
+                {
+                    udpListener.BeginSend(_packet.ToArray(), _packet.Length(), _clientEndPoint, null, null);
+                }
+            }
+            catch (Exception _ex)
+            {
+                Console.WriteLine($"Error sending data to {_clientEndPoint} vida UDP: {_ex}");
+            }
+        }
+
+
         private static void InitalizeServerData()
         {
             for (int i = 1; i <= MaxPlayers; i++)
@@ -60,7 +123,8 @@ namespace GameServer
             //initializing the dictionary for Packethandlers
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
-                {(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived }
+                {(int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
+                {(int)ClientPackets.playerMovement, ServerHandle.PlayerMovement },
             };
             Console.WriteLine("Intialized packets.");
         }
