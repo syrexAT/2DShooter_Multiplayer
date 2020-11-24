@@ -42,4 +42,52 @@ public class ClientHandle : MonoBehaviour
 
         GameManager.players[_id].transform.rotation = _rotation;
     }
+
+    public static void PlayerDisconnected(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+
+        Destroy(GameManager.players[_id].gameObject);
+        GameManager.players.Remove(_id);
+    }
+
+    public static void PlayerHealth(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        float _health = _packet.ReadFloat();
+
+        GameManager.players[_id].SetHealth(_health);
+    }
+    
+    public static void PlayerRespawned(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        GameManager.players[_id].Respawn();
+    }
+
+    public static void SpawnProjectile(Packet _packet)
+    {
+        int _projectileId = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+        int _shotByPlayer = _packet.ReadInt();
+
+        GameManager.instance.SpawnProjectile(_projectileId, _position);
+        //GameManager.players[_shotByPlayer].
+    }
+
+    public static void ProjectilePosition(Packet _packet)
+    {
+        int _projectileId = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+
+        GameManager.projectiles[_projectileId].transform.position = _position;
+    }
+
+    public static void ProjectileDestroyed(Packet _packet)
+    {
+        int _projectileId = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+
+        GameManager.projectiles[_projectileId].Explode(_position);
+    }
 }
