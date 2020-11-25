@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public Transform shootOrigin;
     public float health;
     public float maxHealth;
-    public Rigidbody2D rigBody;
+    public Rigidbody rigBody;
 
     public float projectileSpeed;
 
@@ -27,8 +27,19 @@ public class Player : MonoBehaviour
         inputs = new bool[4];
     }
 
+    private void Update()
+    {
+        Vector3 pos = transform.position;
+        pos.z = 0;
+        transform.position = pos;
+        Quaternion rot = transform.rotation;
+        
+    }
+
     public void FixedUpdate()
     {
+        
+
         if (health <= 0f)
         {
             return;

@@ -8,8 +8,9 @@ public class PlayerController : MonoBehaviour
     //we dont want clients sending positions to server because of anti cheat
 
     public Camera cam;
-    Vector2 mousePos;
-    public Rigidbody2D rb;
+    Vector3 mousePos;
+    //Vector2 mousePos;
+    public Rigidbody rb;
     public PlayerManager player;
 
 
@@ -20,10 +21,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, transform.forward * 2, Color.red);
-        Vector3 cursorInWorldPos = cam.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
+
+        Vector3 pos = transform.position;
+        pos.z = 0;
+        transform.position = pos;
+
+
+
+        Debug.DrawRay(transform.position, transform.up * 2, Color.red);
+        Vector3 cursorInWorldPos = cam.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
         Debug.Log(cursorInWorldPos);
-        if (Input.GetKeyDown(KeyCode.Mouse0)) 
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             ClientSend.PlayerShoot(cursorInWorldPos);
         }
@@ -34,8 +42,9 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate() //Project settings -> Time -> Fixed Timesteps to 0.03 to match with the ticks, no point in sending input more often
     {
         SendInputToServer();
+        //Vector2 lookDir = mousePos - rb.position;
 
-        Vector2 lookDir = mousePos - rb.position;
+        Vector3 lookDir = mousePos - transform.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f; //- or + 90?
         player.transform.rotation = Quaternion.Euler(0, 0, angle);
     }

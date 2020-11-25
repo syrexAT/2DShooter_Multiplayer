@@ -125,7 +125,7 @@ public class Client
                     _packetLength = receivedData.ReadInt(); //store that length
                     if (_packetLength <= 0)
                     {
-                        return true; //because in that case we want to reset receivedData
+                        return true; //in that case we want to reset receivedData
                     }
                 }
             }

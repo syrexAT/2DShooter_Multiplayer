@@ -7,6 +7,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
+    public Camera mainCamera;
 
     public GameObject startMenu;
     public TMP_InputField usernameField;
@@ -29,5 +30,6 @@ public class UIManager : MonoBehaviour
         startMenu.SetActive(false);
         usernameField.interactable = false;
         Client.instance.ConnectToServer();
+        //Destroy(mainCamera);
     }
 }

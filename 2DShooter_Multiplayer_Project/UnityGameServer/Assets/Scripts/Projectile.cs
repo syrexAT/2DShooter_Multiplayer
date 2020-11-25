@@ -8,10 +8,11 @@ public class Projectile : MonoBehaviour
     private static int nextProjectileId = 1;
 
     public int id;
-    public Rigidbody2D rigBody;
+    public Rigidbody rigBody;
     public int shotByPlayer; //id of player that shot the projectile
     public Vector3 initialForce; //probably change it to float as movespeed
     public float damage;
+    public float damageRadius;
 
     private void Start()
     {
@@ -21,18 +22,18 @@ public class Projectile : MonoBehaviour
 
         ServerSend.SpawnProjectile(this, shotByPlayer);
 
-        rigBody.AddForce(initialForce, ForceMode2D.Impulse);
+        rigBody.AddForce(initialForce, ForceMode.Impulse);
     }
     private void FixedUpdate()
     {
         ServerSend.ProjectilePosition(this);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter(Collider other)
     {
-        //print(collision.gameObject.name);
-        //print(collision.gameObject);
-        //print(collision.gameObject.tag);
+        print($"ONCOLLISION: " + other.gameObject.name);
+        print($"ONCOLLISION: " + other.gameObject);
+        print($"ONCOLLISION: " + other.gameObject.tag);
         //if (collision.gameObject.CompareTag("Player"))
         //{
         //    collision.gameObject.GetComponent<Player>().TakeDamage(damage);
@@ -40,9 +41,33 @@ public class Projectile : MonoBehaviour
         //}
 
         //Destroy(gameObject);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<Player>().TakeDamage(damage);
+        }
 
         DestroyProjectile();
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    print($"ONCOLLISION: " + collision.gameObject.name);
+    //    print($"ONCOLLISION: " + collision.gameObject);
+    //    print($"ONCOLLISION: " + collision.gameObject.tag);
+    //    //if (collision.gameObject.CompareTag("Player"))
+    //    //{
+    //    //    collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+    //    //    Destroy(gameObject);
+    //    //}
+
+    //    //Destroy(gameObject);
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+    //    }
+
+    //    DestroyProjectile();
+    //}
 
     public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _shotByPlayer)
     {
@@ -53,8 +78,8 @@ public class Projectile : MonoBehaviour
     private void DestroyProjectile()
     {
         ServerSend.ProjectileDestroyed(this);
-        Collider2D[] _colliders = Physics2D.OverlapAreaAll(transform.position, transform.position);
-        foreach (Collider2D _collider in _colliders)
+        Collider[] _colliders = Physics.OverlapSphere(transform.position, damageRadius);
+        foreach (Collider _collider in _colliders)
         {
             print(_collider.gameObject.name);
             print(_collider.gameObject);
@@ -62,9 +87,10 @@ public class Projectile : MonoBehaviour
             if (_collider.CompareTag("Player"))
             {
                 _collider.GetComponent<Player>().TakeDamage(damage);
+                Destroy(gameObject);
             }
         }
-
+        projectiles.Remove(id);
         Destroy(gameObject);
     }
 

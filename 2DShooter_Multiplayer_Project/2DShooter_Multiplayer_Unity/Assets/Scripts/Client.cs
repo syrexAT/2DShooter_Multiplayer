@@ -12,7 +12,7 @@ public class Client : MonoBehaviour
     public static int dataBufferSize = 4096;
 
     public string ip = "127.0.0.1";
-    public int port = 26950;
+    public int port = 55555;
     public int myId = 0;
     public TCP tcp;
     public UDP udp;
@@ -81,6 +81,7 @@ public class Client : MonoBehaviour
         {
             socket.EndConnect(_result);
 
+            //are we connected?
             if (!socket.Connected)
             {
                 return;

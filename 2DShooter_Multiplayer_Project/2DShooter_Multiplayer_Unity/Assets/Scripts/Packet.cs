@@ -177,6 +177,13 @@ public class Packet : IDisposable
         Write(_value.y);
         Write(_value.z);
     }
+
+    public void Write(Vector2 _value)
+    {
+        Write(_value.x);
+        Write(_value.y);
+    }
+
     public void Write(Quaternion _value)
     {
         Write(_value.x);
@@ -360,6 +367,11 @@ public class Packet : IDisposable
     public Vector3 ReadVector3(bool _moveReadPos = true)
     {
         return new Vector3(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
+    }
+
+    public Vector2 ReadVector2(bool _moveReadPos = true)
+    {
+        return new Vector3(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
     }
 
     public Quaternion ReadQuaternion(bool _moveReadPos = true)

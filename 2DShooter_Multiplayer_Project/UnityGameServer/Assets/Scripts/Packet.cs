@@ -142,7 +142,7 @@ public class Packet : IDisposable
     /// <param name="_value">The int to add.</param>
     public void Write(int _value)
     {
-        buffer.AddRange(BitConverter.GetBytes(_value));
+        buffer.AddRange(BitConverter.GetBytes(_value)); //takes int as a value and converts the int to a list of bytes and then adds it to the buffer
     }
     /// <summary>Adds a long to the packet.</summary>
     /// <param name="_value">The long to add.</param>
@@ -176,6 +176,13 @@ public class Packet : IDisposable
         Write(_value.y);
         Write(_value.z);
     }
+
+    public void Write(Vector2 _value)
+    {
+        Write(_value.x);
+        Write(_value.y);
+    }
+
     public void Write(Quaternion _value)
     {
         Write(_value.x);
@@ -254,18 +261,18 @@ public class Packet : IDisposable
 
     /// <summary>Reads an int from the packet.</summary>
     /// <param name="_moveReadPos">Whether or not to move the buffer's read position.</param>
-    public int ReadInt(bool _moveReadPos = true)
+    public int ReadInt(bool _moveReadPos = true) //if there are bytes we havent read yet we take the next set of bytes from the list and convert it to an int
     {
         if (buffer.Count > readPos)
         {
             // If there are unread bytes
             int _value = BitConverter.ToInt32(readableBuffer, readPos); // Convert the bytes to an int
-            if (_moveReadPos)
+            if (_moveReadPos) //increase by 4 because int is 4 bytes
             {
                 // If _moveReadPos is true
-                readPos += 4; // Increase readPos by 4
+                readPos += 4; // Increase readPos by 4 //readpos tells us which bytes in the packet we have already converted and which ones are next
             }
-            return _value; // Return the int
+            return _value; // Return the int //if bytes list length is less than readposition --> no more bytes left to read!
         }
         else
         {
@@ -360,6 +367,11 @@ public class Packet : IDisposable
     public Vector3 ReadVector3(bool _moveReadPos = true)
     {
         return new Vector3(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
+    }
+
+    public Vector2 ReadVector2(bool _moveReadPos = true)
+    {
+        return new Vector3(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
     }
 
     public Quaternion ReadQuaternion(bool _moveReadPos = true)
